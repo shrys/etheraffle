@@ -73,4 +73,15 @@ describe('Lottery Contract', () => {
             assert.ok(err); //making susre the test passes
         }
     });
+
+    it('only manager can call pickWinner', async () => {
+        try {
+            await lottery.methods.pickWinner().send({
+               from: account[1] // failing the case on purpose
+            });
+            assert(false);
+        } catch(err) {
+            assert.ok(err);
+        }
+    });
 });
