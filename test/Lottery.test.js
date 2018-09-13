@@ -28,4 +28,10 @@ describe('Lottery Contract', () => {
     it('deploys contract', () => {
         assert.ok(lottery.options.address);
     });
+    it('allows one account to enter', async () => {
+        await lottery.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei('0.02', 'ether')
+        });
+    });
 });
