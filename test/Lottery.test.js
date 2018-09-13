@@ -44,7 +44,6 @@ describe('Lottery Contract', () => {
     });
 
     it('allows multiple accounts', async () => {
-        let N = 3;
         for (let account of accounts) {
             await lottery.methods.enter().send({
                 from: account,
@@ -61,5 +60,17 @@ describe('Lottery Contract', () => {
         }
 
         assert(accounts.length, players.length);
+    });
+
+    it('requires a minimum amount', async () => { // intentionally erroring out
+        try {
+            await lotter.methods.enter().send({
+                from: accounts[0],
+                value: 0
+            });
+            assert(false); // failing on purpose if previous statement is ignored somehow
+        } catch (err) {
+            assert.ok(err); //making susre the test passes
+        }
     });
 });
